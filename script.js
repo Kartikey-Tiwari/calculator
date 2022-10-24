@@ -31,21 +31,25 @@ function operate(a, operator, b=0){
 	}
 }
 
-let curResult = 0;
+let result = 0;
 let wasLastOperator = false;
+
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
 	button.addEventListener('click', (event) => {
 		if (button.id==='all-clear'){
 			display.textContent = '0'
-			curResult = 0;
+			result = 0;
 		}
 		else if (button.id==='clear'){
 			if (display.textContent.length === 1){
 				display.textContent = '0';
 			}
 			else {
-				display.textContent = display.textContent.slice(0, display.textContent.size-1);
+				if (/^[+\-\%\÷x]$/.test(display.textContent[display.textContent.length-1])){
+					wasLastOperator = false;
+				}
+				display.textContent = display.textContent.slice(0, display.textContent.length-1);
 			}
 		}
 		else{
