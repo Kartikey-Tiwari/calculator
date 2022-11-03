@@ -33,12 +33,14 @@ function operate(a, operator, b=0){
 
 let result = 0;
 let wasLastOperator = false;
+let isFloat = false;
+let wasLastNumFloat = false;
 
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
 	button.addEventListener('click', (event) => {
 		if (button.id==='all-clear'){
-			display.textContent = '0'
+			display.textContent = ''
 			result = 0;
 		}
 		else if (button.id==='clear'){
@@ -48,10 +50,21 @@ buttons.forEach(button => {
 			else {
 				if (/^[+\-\%\÷x]$/.test(display.textContent[display.textContent.length-1])){
 					wasLastOperator = false;
+          isFloat = wasLastNumFloat;
+          wasLastNumFloat = false;
 				}
+        else if (display.textContent[display.textContent.length-1] === '.') {
+          isFloat = false;
+        }
 				display.textContent = display.textContent.slice(0, display.textContent.length-1);
 			}
 		}
+    else if (button.id === '.'){
+      if (!isFloat){
+        isFloat = true;
+        display.textContent += '.';
+      }
+    }
 		else{
 			if (display.textContent === '0'){
 				if (button.classList.contains('operator-btn') || button.id==='00'){
@@ -68,8 +81,10 @@ buttons.forEach(button => {
 					}
 					else{
 						display.textContent += button.id;
+            wasLastNumFloat = isFloat;
 					}
 					wasLastOperator = true;
+          isFloat = false;
 				}
 				else{
 					wasLastOperator = false;
