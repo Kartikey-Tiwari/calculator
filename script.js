@@ -17,15 +17,15 @@ function divide(a, b){
 function operate(a, operator, b=0){
 	switch(operator){
 		case '+':
-			return add(a, b); break;
+			return add(a, b);
 		case '-':
-			return subtract(a, b); break;
+			return subtract(a, b);
 		case '*':
-			return multiply(a, b); break;
+			return multiply(a, b);
 		case '/':
-			return divide(a,b); break;
+			return divide(a,b);
 		case '%':
-			return a/100; break;
+			return a/100;
 		default:
 			return "oops";
 	}
