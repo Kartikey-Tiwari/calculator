@@ -21,15 +21,26 @@ button {
 }
 
 #calculator-body {
-  background: #5c2e7e;
   margin-top: 10vh;
+}
+
+button:hover:not(.operator-btn, #\=) {
+  background: #6f38c5;
+}
+
+.operator-btn:hover span {
+  background: #87a2fb;
+}
+
+#\=:hover span {
+  background: #3256d8;
 }
 
 button {
   width: 80px;
   height: 80px;
   border: none;
-  background: transparent;
+  background: #5c2e7e;
   color: white;
   padding: 0;
 }
@@ -45,6 +56,11 @@ span {
   background: #8bbccc;
 }
 
+#result-expr,
+#display {
+  background: #80489c;
+}
+
 #result-expr {
   height: 30px;
   font-size: 22px;
@@ -53,8 +69,7 @@ span {
 
 #display {
   height: 32px;
-  margin-bottom: 10px;
-  margin: 0 10px;
+  padding: 0 10px 10px;
 }
 
 .btn-row {
