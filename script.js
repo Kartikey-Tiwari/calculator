@@ -20,9 +20,9 @@ function operate(a, operator, b = 0) {
       return add(a, b);
     case "-":
       return subtract(a, b);
-    case "*":
+    case "x":
       return multiply(a, b);
-    case "/":
+    case "÷":
       return divide(a, b);
     case "%":
       return a / 100;
@@ -63,7 +63,7 @@ buttons.forEach((button) => {
         if (!display.textContent) {
           if (
             resultExpr.textContent &&
-            /[+-\÷*]/.test(
+            /[+-\÷x]/.test(
               resultExpr.textContent[resultExpr.textContent.length - 1]
             )
           ) {
@@ -81,6 +81,9 @@ buttons.forEach((button) => {
       }
     } else if (button.classList.contains("operator-btn")) {
       if (display.textContent === "" && resultExpr.textContent === "") {
+        if (button.id === '-'){
+          display.textContent = button.id;
+        }
         return;
       } else if (operator === "") {
         operator = button.id;
@@ -88,10 +91,15 @@ buttons.forEach((button) => {
         result = +display.textContent;
         display.textContent = "";
       } else if (wasLastOperator && operator !== "%") {
-        operator = button.id;
-        resultExpr.textContent =
-          resultExpr.textContent.slice(0, resultExpr.textContent.length - 1) +
-          button.id;
+        if (( operator === 'x' || operator === '÷' ) && button.id === '-'){
+          display.textContent = button.id;
+        }
+        else{
+          operator = button.id; 
+          resultExpr.textContent =
+            resultExpr.textContent.slice(0, resultExpr.textContent.length - 1) +
+            button.id;
+        }
       } else {
         curNumber = +display.textContent;
         result = operate(result, operator, curNumber);
