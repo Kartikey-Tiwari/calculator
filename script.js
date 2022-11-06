@@ -31,6 +31,18 @@ function operate(a, operator, b = 0) {
   }
 }
 
+function roundResult() {
+  let lenResult;
+  if (result % 1 == 0) {
+    lenResult = Math.trunc(Math.log(Math.abs(result))) + 1;
+  } else {
+    lenResult = (result + "").replace(".", "").length;
+  }
+  if (lenResult > 14) {
+    result = result.toPrecision(14);
+  }
+}
+
 let result = 0;
 let curNumber = 0;
 let operator = "";
@@ -76,12 +88,11 @@ buttons.forEach((button) => {
         isFloat = true;
         if (!display.textContent) display.textContent += "0";
         display.textContent += ".";
-        if (operator === '')
-          resultExpr.textContent = '';
+        if (operator === "") resultExpr.textContent = "";
       }
     } else if (button.classList.contains("operator-btn")) {
       if (display.textContent === "" && resultExpr.textContent === "") {
-        if (button.id === '-'){
+        if (button.id === "-") {
           display.textContent = button.id;
         }
         return;
@@ -91,11 +102,10 @@ buttons.forEach((button) => {
         result = +display.textContent;
         display.textContent = "";
       } else if (wasLastOperator && operator !== "%") {
-        if (( operator === 'x' || operator === '÷' ) && button.id === '-'){
+        if ((operator === "x" || operator === "÷") && button.id === "-") {
           display.textContent = button.id;
-        }
-        else{
-          operator = button.id; 
+        } else {
+          operator = button.id;
           resultExpr.textContent =
             resultExpr.textContent.slice(0, resultExpr.textContent.length - 1) +
             button.id;
@@ -103,8 +113,10 @@ buttons.forEach((button) => {
       } else {
         curNumber = +display.textContent;
         result = operate(result, operator, curNumber);
+        roundResult();
         operator = button.id;
         resultExpr.textContent = result + button.id;
+        result = +result;
         display.textContent = "";
       }
       wasLastOperator = true;
@@ -115,6 +127,7 @@ buttons.forEach((button) => {
           curNumber = +display.textContent;
           if (display.textContent === "" && operator !== "%") return;
           result = operate(result, operator, curNumber);
+          roundResult();
           if (operator === "%") curNumber = "";
           resultExpr.textContent += curNumber + "=";
           display.textContent = result;
@@ -132,7 +145,11 @@ buttons.forEach((button) => {
         if (button.id === "00") return;
         else display.textContent = button.id;
       } else {
-        display.textContent += button.id;
+        if (
+          display.textContent.length < 14 ||
+          (display.textContent[0] === "-" && display.textContent.length < 15)
+        )
+          display.textContent += button.id;
       }
     }
   });
