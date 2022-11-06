@@ -22,6 +22,7 @@ button {
 
 #calculator-body {
   margin-top: 10vh;
+  width: 420px;
 }
 
 button:hover:not(.operator-btn, #\=) {
@@ -37,7 +38,6 @@ button:hover:not(.operator-btn, #\=) {
 }
 
 button {
-  width: 80px;
   height: 80px;
   border: none;
   background: #5c2e7e;
@@ -74,4 +74,8 @@ span {
 
 .btn-row {
   display: flex;
+}
+
+.btn-row button {
+  flex: 1;
 }
