@@ -62,6 +62,9 @@ buttons.forEach((button) => {
       isFloat = false;
     } else if (button.id === "clear") {
       if (display.textContent) {
+        if (display.textContent === "Infinity") {
+          display.textContent = "";
+        }
         if (display.textContent[display.textContent.length - 1] === ".") {
           isFloat = false;
         }
@@ -135,6 +138,7 @@ buttons.forEach((button) => {
       }
       operator = "";
     } else {
+      if (display.textContent === "Infinity") return;
       if (resultExpr.textContent[resultExpr.textContent.length - 1] === "=")
         resultExpr.textContent = "";
       if (operator === "%") return;
