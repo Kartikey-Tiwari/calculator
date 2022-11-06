@@ -63,6 +63,7 @@ span {
 
 #result-expr {
   height: 30px;
+  overflow-x: auto;
   font-size: 22px;
   padding: 5px 10px 0;
 }
