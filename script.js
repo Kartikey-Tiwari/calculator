@@ -59,7 +59,7 @@ function roundResult() {
 }
 
 function handleDigitInput(digit) {
-  if (display.textContent === "Infinity") return;
+  if (display.textContent === "Infinity") display.textContent = 0;
   if (resultExpr.textContent[resultExpr.textContent.length - 1] === "=")
     resultExpr.textContent = "";
   if (operator === "%") return;
@@ -97,13 +97,13 @@ function clearDisplay() {
     }
     display.textContent = display.textContent.slice(
       0,
-      display.textContent.length - 1
+      display.textContent.length - 1,
     );
     if (!display.textContent) {
       if (
         resultExpr.textContent &&
         /[+-\÷x]/.test(
-          resultExpr.textContent[resultExpr.textContent.length - 1]
+          resultExpr.textContent[resultExpr.textContent.length - 1],
         )
       ) {
         wasLastOperator = true;
@@ -113,12 +113,15 @@ function clearDisplay() {
 }
 
 function handleOperatorInput(op) {
+  if (display.textContent === "Infinity" || display.textContent === "-Infinity")
+    return;
   if (display.textContent === "" && resultExpr.textContent === "") {
     if (op === "-") {
       display.textContent = op;
     }
     return;
   } else if (operator === "") {
+    if (display.textContent === "-") return;
     operator = op;
     resultExpr.textContent = display.textContent + op;
     result = +display.textContent;
@@ -128,6 +131,7 @@ function handleOperatorInput(op) {
       display.textContent = op;
     } else {
       operator = op;
+      display.textContent = "";
       resultExpr.textContent =
         resultExpr.textContent.slice(0, resultExpr.textContent.length - 1) + op;
     }
